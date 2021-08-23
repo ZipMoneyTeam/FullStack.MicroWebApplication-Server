@@ -1,7 +1,6 @@
 package mainApp.services;
 
 import mainApp.entities.Member;
-import mainApp.entities.User;
 import mainApp.repositories.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
