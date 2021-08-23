@@ -1,6 +1,6 @@
-package main.controllers;
+package mainApp.controllers;
 
-import main.services.UserService;
+import mainApp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 

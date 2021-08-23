@@ -1,6 +1,6 @@
-package main.services;
+package mainApp.services;
 
-import main.repositories.UserRepository;
+import mainApp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

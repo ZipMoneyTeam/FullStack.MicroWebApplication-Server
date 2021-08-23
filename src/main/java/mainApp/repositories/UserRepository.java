@@ -1,6 +1,6 @@
-package main.repositories;
+package mainApp.repositories;
 
-import main.entities.User;
+import mainApp.entities.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
