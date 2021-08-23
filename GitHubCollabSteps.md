@@ -1,6 +1,6 @@
 # Git Hub Collaboration
 
-###Steps for Collaborating
+### Steps for Collaborating
 1. Git clone repository to your local computer
 2. Have one person create a dev branch for your group
 3. git checkout -b to create new branch
