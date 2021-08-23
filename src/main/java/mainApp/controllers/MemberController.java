@@ -1,9 +1,6 @@
 package mainApp.controllers;
-
 import mainApp.entities.Member;
-import mainApp.entities.User;
 import mainApp.services.MemberService;
-import mainApp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
