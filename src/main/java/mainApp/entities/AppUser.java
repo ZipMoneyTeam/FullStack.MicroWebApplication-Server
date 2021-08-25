@@ -7,7 +7,7 @@ import javax.persistence.Id;
 
 
 @Entity
-public class User {
+public class AppUser {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -16,6 +16,18 @@ public class User {
     String birthDate;
     String phoneNumber;
     String emailId;
+
+    public AppUser() {
+    }
+
+    public AppUser(Long id, String firstName, String lastName, String birthDate, String phoneNumber, String emailId) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthDate = birthDate;
+        this.phoneNumber = phoneNumber;
+        this.emailId = emailId;
+    }
 
     public Long getId() {
         return id;
@@ -64,20 +76,4 @@ public class User {
     public void setEmailId(String emailId) {
         this.emailId = emailId;
     }
-
-    public User() {
-    }
-
-    public User(Long id, String firstName, String lastName, String birthDate, String phoneNumber, String emailId) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthDate = birthDate;
-        this.phoneNumber = phoneNumber;
-        this.emailId = emailId;
-    }
-//    public String createUser(Long id, String firstName, String lastName, String birthDate, String phoneNumber, String emailId){
-//        String member="";
-//        return member =id +" "+ firstName +" "+ lastName +" "+ birthDate +" "+ phoneNumber +" "+ emailId;
-//    }
 }

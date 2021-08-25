@@ -2,17 +2,24 @@ package mainApp.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Member {
+public class UserLogin {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
     String emailId;
     String password;
 
-    public Member() {
+    public UserLogin() {
+    }
+
+    public UserLogin(Long id, String emailId, String password) {
+        this.id = id;
+        this.emailId = emailId;
+        this.password = password;
     }
 
     public Long getId() {
@@ -36,12 +43,6 @@ public class Member {
     }
 
     public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Member(Long id, String emailId, String password) {
-        this.id = id;
-        this.emailId = emailId;
         this.password = password;
     }
 }
