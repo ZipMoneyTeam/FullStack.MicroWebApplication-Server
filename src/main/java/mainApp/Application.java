@@ -20,6 +20,8 @@ public class Application {
 		registrationBean.addUrlMappings("/console/*");
 		return registrationBean;
 	}
+
+
 }
 
 
