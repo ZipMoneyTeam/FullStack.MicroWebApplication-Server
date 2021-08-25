@@ -1,9 +1,9 @@
 package mainApp.repositories;
 
-import mainApp.entities.Member;
+import mainApp.entities.UserLogin;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MemberRepository extends CrudRepository<Member, Long> {
+public interface UserLoginRepository extends CrudRepository<UserLogin, Long> {
 }
