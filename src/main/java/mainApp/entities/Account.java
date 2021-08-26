@@ -1,9 +1,8 @@
 package mainApp.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 
 @Entity
 public class Account {
@@ -11,14 +10,14 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
     String accountName;
-    String accountNumber;
+    Long accountNumber;  // how to increment auto generate
     String accountType;
-    Integer amount;
+    Double amount;
 
     public Account() {
     }
 
-    public Account(Long id, String accountName, String accountNumber, String accountType, Integer amount) {
+    public Account(Long id, String accountName, Long accountNumber, String accountType, Double amount) {
         this.id = id;
         this.accountName = accountName;
         this.accountNumber = accountNumber;
@@ -42,11 +41,11 @@ public class Account {
         this.accountName = accountName;
     }
 
-    public String getAccountNumber() {
+    public Long getAccountNumber() {
         return accountNumber;
     }
 
-    public void setAccountNumber(String accountNumber) {
+    public void setAccountNumber(Long accountNumber) {
         this.accountNumber = accountNumber;
     }
 
@@ -58,11 +57,11 @@ public class Account {
         this.accountType = accountType;
     }
 
-    public Integer getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(Integer amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 }
