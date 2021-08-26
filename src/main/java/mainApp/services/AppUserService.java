@@ -14,6 +14,10 @@ public class AppUserService {
     @Autowired
     private AppUserRepository appUserRepository;
 
+    public AppUserService(AppUserRepository appUserRepository) {
+        this.appUserRepository = appUserRepository;
+    }
+
     public AppUser create(AppUser appUser) {
         return appUserRepository.save(appUser);
     }

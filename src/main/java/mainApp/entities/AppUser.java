@@ -16,6 +16,7 @@ public class AppUser {
     String birthDate;
     String phoneNumber;
     String emailId;
+    // App user needs a user login somehow to connect them
 
     public AppUser() {
     }

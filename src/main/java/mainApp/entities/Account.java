@@ -13,16 +13,18 @@ public class Account {
     Long accountNumber;  // how to increment auto generate
     String accountType;
     Double amount;
+    AppUser appUser;
 
     public Account() {
     }
 
-    public Account(Long id, String accountName, Long accountNumber, String accountType, Double amount) {
+    public Account(Long id, String accountName, Long accountNumber, String accountType, Double amount, AppUser appUser) {
         this.id = id;
         this.accountName = accountName;
         this.accountNumber = accountNumber;
         this.accountType = accountType;
         this.amount = amount;
+        this.appUser = appUser;
     }
 
     public Long getId() {
@@ -63,5 +65,13 @@ public class Account {
 
     public void setAmount(Double amount) {
         this.amount = amount;
+    }
+
+    public AppUser getAppUser() {
+        return appUser;
+    }
+
+    public void setAppUser(AppUser appUser) {
+        this.appUser = appUser;
     }
 }

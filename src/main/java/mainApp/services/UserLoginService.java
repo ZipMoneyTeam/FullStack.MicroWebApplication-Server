@@ -13,6 +13,10 @@ public class UserLoginService {
     @Autowired
     UserLoginRepository userLoginRepository;
 
+    public UserLoginService(UserLoginRepository userLoginRepository) {
+        this.userLoginRepository = userLoginRepository;
+    }
+
     public UserLogin create(UserLogin userLogin) {
         return userLoginRepository.save(userLogin);
     }

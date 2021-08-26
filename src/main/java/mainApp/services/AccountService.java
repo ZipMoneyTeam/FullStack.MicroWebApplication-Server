@@ -2,10 +2,13 @@ package mainApp.services;
 
 import mainApp.entities.Account;
 import mainApp.entities.AppUser;
+import mainApp.entities.Transaction;
 import mainApp.repositories.AccountRepository;
+import mainApp.repositories.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +17,11 @@ public class AccountService {
 
     @Autowired
     AccountRepository accountRepository;
+    TransactionService transactionService;
+
+    public AccountService(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
 
     public Account create(Account account) {
         return accountRepository.save(account);
@@ -50,20 +58,21 @@ public class AccountService {
         return delete(account.getId());
     }
 
-    public Account transfer(Account account1, Account account2, Double amountToTransfer) {
-
+    public Account transfer(Long idFrom, Long idTo, Double amountToTransfer) throws Exception {
         // Account1 is where we are transfering from -> get the amount in account1 -> substract amountToTransfer
         // Account2 is where we are sending to -> get the amount in account2 -> add amountToTransfer
         // return your new balances are + account1.getamount + account2.getaccount
-
-
 //        Double amount1 = account1.getAmount() - amountToTransfer;  // have to make logic reference specific account using the id.
 //        Double amount2 = account2.getAmount() + amountToTransfer;
-//
 //        account1.setAmount(amount1);
 //        account2.setAmount(amount2);
 
-        return account1;
+        Account result = withdraw(idFrom, amountToTransfer);
+        deposit(idTo, amountToTransfer);
+
+
+
+        return result; // returns account we withdraw from
     }
 
     public Account deposit(Long id, Double amountToDeposit) { // using id to reference the specific account
@@ -71,14 +80,30 @@ public class AccountService {
         Double amount = originalAccount.getAmount() + amountToDeposit;
         originalAccount.setAmount(amount);
 
+        generateAndSaveTransaction(originalAccount.getAppUser(),"DEPOSIT", true,
+                String.format("Deposited %s into account with id %s", amountToDeposit, originalAccount.getId()));
+
         return originalAccount;
+
     }
 
-    public Account withdraw(Long id, Double amountToWithdraw) { // using id to reference the specific account
+    public Account withdraw(Long id, Double amountToWithdraw) throws Exception { // using id to reference the specific account
         Account originalAccount = accountRepository.findOne(id);
         Double amount = originalAccount.getAmount() - amountToWithdraw;
+        if (amount < 0) {
+            throw new Exception("Insufficient funds my boy");
+        }
         originalAccount.setAmount(amount);
+
+
 
         return originalAccount;
     }
+
+    public Transaction generateAndSaveTransaction(AppUser appUser, String type, Boolean status, String info) {
+        return transactionService.saveTransaction(new Transaction(null, type, status, info, Instant.now(), appUser));
+    }
+
+    //After each function call transaction method
+
 }
