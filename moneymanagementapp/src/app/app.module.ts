@@ -7,11 +7,18 @@ import { AppUsersComponent } from './appUsers/appUsers.component';
 import { UserLoginsComponent } from './userLogins/userLogins.component';
 import { RouterModule,Routes } from '@angular/router';
 import { CreateAccountComponent } from './create-account/create-account.component';
+import { DepositComponent } from './deposit/deposit.component';
+import { TransferAccountComponent } from './transfer-account/transfer-account.component';
+import { WithdrawComponent } from './withdraw/withdraw.component';
 
 const routes:Routes=[
-  { path: '',component:UserLoginsComponent},
-  {path:'appUsers',component:AppUsersComponent},
-  {path:'create-account',component:CreateAccountComponent}
+  // { path: '',component:AppComponent},
+  {path:'userLogins',component:UserLoginsComponent},
+  {path:'create-account',component:CreateAccountComponent},
+  {path:'deposit',component:DepositComponent},
+  {path:'withdraw',component:WithdrawComponent},
+  {path:'transfer-account',component:TransferAccountComponent}
+  
 ]
 
 @NgModule({
@@ -19,7 +26,10 @@ const routes:Routes=[
     AppComponent,
     AppUsersComponent,
     UserLoginsComponent,
-    CreateAccountComponent
+    CreateAccountComponent,
+    DepositComponent,
+    TransferAccountComponent,
+    WithdrawComponent
   ],
   imports: [
     BrowserModule,
