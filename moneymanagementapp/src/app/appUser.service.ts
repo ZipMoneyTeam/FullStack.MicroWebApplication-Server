@@ -7,11 +7,12 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
+
 export class AppUserService {
   private apiServerUrl = environment.apiBaseUrl;
 
 
-  constructor(private http: HttpClient) { }
+constructor(private http: HttpClient) { }
 
   public getAppUsers(): Observable<AppUser[]> {
     return this.http.get<AppUser[]>(`${this.apiServerUrl}/user-controller/readAll`);
