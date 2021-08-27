@@ -1,13 +1,12 @@
 package mainApp.services;
 
-import mainApp.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import mainApp.dto.UserDto;
+import mainApp.entities.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
-@Service
-public class UserService {
+public interface UserService extends UserDetailsService {
 
+    User findByEmail(String email);
 
-    @Autowired
-    private UserRepository userRepository;
+    User save(UserDto registration);
 }
