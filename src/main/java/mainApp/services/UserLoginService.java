@@ -1,11 +1,16 @@
 package mainApp.services;
 
+import mainApp.entities.AppUser;
+import mainApp.entities.RegistrationResult;
 import mainApp.entities.UserLogin;
 import mainApp.repositories.UserLoginRepository;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserLoginService {
@@ -50,4 +55,36 @@ public class UserLoginService {
         return delete(userLogin.getId());
     }
 
+    public AppUser findByEmail(String email) {
+        return null;
+    }
+
+
+    public RegistrationResult register(UserLogin userLogin) {
+
+        RegistrationResult result;
+
+        AppUser existing = findByEmail(userLogin.getEmailId());
+        if (existing == null) {
+            create(userLogin);
+            result = RegistrationResult.SUCCESS;
+        } else {
+            result = RegistrationResult.EMAIL_TAKEN;
+        }
+        return result;
+    }
+
+//    @Override
+//    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+////    	creating simple authority
+//        Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
+//        authorities.add(new SimpleGrantedAuthority("ROLE_BANK_USER"));
+//        User user = userRepository.findByEmail(email);
+//        if (user == null) {
+//            throw new UsernameNotFoundException("Invalid username or password.");
+//        }
+//        return new org.springframework.security.core.userdetails.User(user.getEmail(),
+//                user.getPassword(),
+//                authorities);
+//    }
 }

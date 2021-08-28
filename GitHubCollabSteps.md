@@ -1,4 +1,4 @@
-# Git Hub Collaboration
+`# Git Hub Collaboration
 
 ### Steps for Collaborating
 1. Git clone repository to your local computer
