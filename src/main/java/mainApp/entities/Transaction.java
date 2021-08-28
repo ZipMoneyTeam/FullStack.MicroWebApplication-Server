@@ -1,9 +1,6 @@
 package mainApp.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.Instant;
 
 @Entity
@@ -15,18 +12,19 @@ public class Transaction {
     Boolean status;
     String info;
     Instant date;
-    AppUser userId;
+    @ManyToOne(targetEntity=Account.class, fetch=FetchType.EAGER)
+    Account accountId;
 
     public Transaction() {
     }
 
-    public Transaction(Long id, String type, Boolean status, String info, Instant date, AppUser userId) {
+    public Transaction(Long id, String type, Boolean status, String info, Instant date, Account accountId) {
         this.id = id;
         this.type = type;
         this.status = status;
         this.info = info;
         this.date = date;
-        this.userId = userId;
+        this.accountId = accountId;
     }
 
     public Long getId() {
@@ -69,11 +67,11 @@ public class Transaction {
         this.date = date;
     }
 
-    public AppUser getUserId() {
-        return userId;
+    public Account getAccountId() {
+        return accountId;
     }
 
-    public void setUserId(AppUser userId) {
-        this.userId = userId;
+    public void setAccountId(Account accountId) {
+        this.accountId = accountId;
     }
 }

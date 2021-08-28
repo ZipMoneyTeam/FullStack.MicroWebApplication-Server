@@ -1,7 +1,6 @@
 package mainApp.services;
 
 import mainApp.entities.Account;
-import mainApp.entities.AppUser;
 import mainApp.entities.Transaction;
 import mainApp.repositories.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +53,7 @@ public class AccountService {
     }
 
     public Account delete(Account account){
-        return delete(account.getId());
+        return delete(account.getAccountId());
     }
 
     public Account transfer(Long idFrom, Long idTo, Double amountToTransfer) throws Exception {
@@ -77,8 +76,8 @@ public class AccountService {
         Double amount = originalAccount.getAmount() + amountToDeposit;
         originalAccount.setAmount(amount);
 
-        generateAndSaveTransaction(originalAccount.getAppUser(),"DEPOSIT", true,
-                String.format("Deposited %s into account with id %s", amountToDeposit, originalAccount.getId()));
+        generateAndSaveTransaction(originalAccount,"DEPOSIT", true,
+                String.format("Deposited %s into account with id %s", amountToDeposit, originalAccount.getAccountId()));
 
         return originalAccount;
 
@@ -92,15 +91,15 @@ public class AccountService {
         }
         originalAccount.setAmount(amount);
 
-        generateAndSaveTransaction(originalAccount.getAppUser(),"WITHDRAW", true,
-                String.format("Withdrew %s from account with id %s", amountToWithdraw, originalAccount.getId()));
+        generateAndSaveTransaction(originalAccount,"WITHDRAW", true,
+                String.format("Withdrew %s from account with id %s", amountToWithdraw, originalAccount.getAccountId()));
 
 
         return originalAccount;
     }
 
-    public Transaction generateAndSaveTransaction(AppUser appUser, String type, Boolean status, String info) {
-        return transactionService.saveTransaction(new Transaction(null, type, status, info, Instant.now(), appUser));
+    public Transaction generateAndSaveTransaction(Account account, String type, Boolean status, String info) {
+        return transactionService.saveTransaction(new Transaction(null, type, status, info, Instant.now(), account));
     }
 
     //After each function call transaction method

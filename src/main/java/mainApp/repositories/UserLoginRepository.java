@@ -10,7 +10,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserLoginRepository extends CrudRepository<UserLogin, Long> {
 
-    @Query("SELECT * FROM USER_LOGIN WHERE email_id = :emailId" )
+    @Query(nativeQuery = true,
+           value = "SELECT * FROM USER_LOGIN WHERE email_id = :emailId" )
     UserLogin findByEmailId(@Param("emailId") String emailId);
 
 }

@@ -1,5 +1,6 @@
 package mainApp.services;
 
+import mainApp.dto.RegistrationDto;
 import mainApp.entities.AppUser;
 import mainApp.entities.UserLogin;
 import mainApp.repositories.AppUserRepository;
@@ -20,7 +21,8 @@ public class AppUserService {
         this.appUserRepository = appUserRepository;
     }
 
-    public AppUser create(AppUser appUser) {
+    public AppUser create(RegistrationDto registrationDto) {
+        AppUser appUser = new AppUser(registrationDto.getFirstName(), registrationDto.getLastName(), registrationDto.getBirthDate(), registrationDto.getPhoneNumber(), registrationDto.getEmailId());
         return appUserRepository.save(appUser);
     }
 

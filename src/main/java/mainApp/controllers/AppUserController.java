@@ -18,11 +18,6 @@ public class AppUserController {
         this.appUserService = appUserService;
     }
 
-    @PostMapping(value = "/createUser")
-    public ResponseEntity<AppUser> create(@RequestBody AppUser appUser) {
-        return new ResponseEntity<AppUser>(appUserService.create(appUser), HttpStatus.CREATED);
-    }
-
     @GetMapping(value = "/read/{emailId}")
     public ResponseEntity<AppUser> read(@PathVariable String emailId) {
         return new ResponseEntity<AppUser>(appUserService.read(emailId), HttpStatus.OK);

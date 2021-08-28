@@ -9,7 +9,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AppUserRepository extends CrudRepository<AppUser, String> {
 
-    @Query("SELECT * FROM APP_USER WHERE email_id = :emailId" )
+    @Query(nativeQuery = true,
+            value = "SELECT * FROM APP_USER WHERE email_id = :emailId" )
     AppUser findByEmailId(@Param("emailId") String emailId);
 
 }

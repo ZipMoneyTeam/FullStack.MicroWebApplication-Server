@@ -1,5 +1,6 @@
 package mainApp.services;
 
+import mainApp.dto.RegistrationDto;
 import mainApp.entities.AppUser;
 import mainApp.entities.RegistrationResult;
 import mainApp.entities.UserLogin;
@@ -24,12 +25,13 @@ public class UserLoginService {
         this.userLoginRepository = userLoginRepository;
     }
 
-    public UserLogin create(UserLogin userLogin) {
+    public UserLogin create(RegistrationDto registration) {
+        UserLogin userLogin = new UserLogin(registration.getEmailId(), registration.getPassword());
         return userLoginRepository.save(userLogin);
     }
 
-    public UserLogin read(Long id){
-        return userLoginRepository.findById(id).get();
+    public UserLogin read(String emailId){
+        return userLoginRepository.findByEmailId(emailId);
     }
 
     public List<UserLogin> readAll() {
@@ -39,36 +41,35 @@ public class UserLoginService {
         return result;
     }
 
-    public UserLogin update(Long id, UserLogin newLoginData){
-        UserLogin originalUserLogin = userLoginRepository.findById(id).get();
+    public UserLogin update(String emailId, UserLogin newLoginData){
+        UserLogin originalUserLogin = userLoginRepository.findByEmailId(emailId);
         originalUserLogin.setEmailId(newLoginData.getEmailId());
         originalUserLogin.setPassword(newLoginData.getPassword());
         originalUserLogin = userLoginRepository.save(originalUserLogin);
         return originalUserLogin;
     }
 
-    public UserLogin delete(Long id){
-        UserLogin userLoginInDb = read(id);
+    public UserLogin delete(String emailId){
+        UserLogin userLoginInDb = read(emailId);
         userLoginRepository.delete(userLoginInDb);
         return userLoginInDb;
     }
 
     public UserLogin delete(UserLogin userLogin){
-        return delete(userLogin.getId());
+        return delete(userLogin.getEmailId());
     }
 
 
-    public RegistrationResult register(UserLogin registrationDto) {
+    public RegistrationResult register(RegistrationDto registrationDto) {
 
         RegistrationResult result;
 
         UserLogin userLogin = userLoginRepository.findByEmailId(registrationDto.getEmailId());
 
         if (userLogin == null) {
-            UserLogin newUserLogin = new UserLogin();
-            create(newUserLogin);
+            create(registrationDto);
 
-            appUserService.create(null);
+            appUserService.create(registrationDto);
 
             result = RegistrationResult.SUCCESS;
 
@@ -76,7 +77,7 @@ public class UserLoginService {
             AppUser existing = appUserService.read(userLogin);
             if(existing == null) {
 
-                appUserService.create(null);
+                appUserService.create(registrationDto);
 
                 result = RegistrationResult.USER_CREATED;
             }

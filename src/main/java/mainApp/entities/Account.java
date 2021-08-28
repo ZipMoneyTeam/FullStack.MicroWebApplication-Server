@@ -1,40 +1,38 @@
 package mainApp.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 
 @Entity
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
+    Long accountId;
     String accountName;
     Long accountNumber;  // how to increment auto generate
     String accountType;
     Double amount;
-    AppUser appUser;
+    @ManyToOne(targetEntity=AppUser.class, fetch=FetchType.EAGER)
+    AppUser userId;
 
     public Account() {
     }
 
-    public Account(Long id, String accountName, Long accountNumber, String accountType, Double amount, AppUser appUser) {
-        this.id = id;
+    public Account(Long accountId, String accountName, Long accountNumber, String accountType, Double amount, AppUser appUser) {
+        this.accountId = accountId;
         this.accountName = accountName;
         this.accountNumber = accountNumber;
         this.accountType = accountType;
         this.amount = amount;
-        this.appUser = appUser;
+        this.userId = appUser;
     }
 
-    public Long getId() {
-        return id;
+    public Long getAccountId() {
+        return accountId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
     }
 
     public String getAccountName() {
@@ -70,10 +68,10 @@ public class Account {
     }
 
     public AppUser getAppUser() {
-        return appUser;
+        return userId;
     }
 
     public void setAppUser(AppUser appUser) {
-        this.appUser = appUser;
+        this.userId = appUser;
     }
 }

@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface TransactionRepository extends CrudRepository<Transaction, Long> {
 
-    @Query("SELECT * FROM TRANSACTION WHERE APP_USER = :appUser" )
+    @Query(nativeQuery = true,
+            value = "SELECT * FROM TRANSACTION WHERE APP_USER = :appUser" )
     List<Transaction> findByAppUser(@Param("appUser") AppUser appUser);
 }

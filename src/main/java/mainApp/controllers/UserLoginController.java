@@ -1,5 +1,6 @@
 package mainApp.controllers;
 
+import mainApp.dto.RegistrationDto;
 import mainApp.entities.RegistrationResult;
 import mainApp.entities.UserLogin;
 import mainApp.services.UserLoginService;
@@ -19,8 +20,8 @@ public class UserLoginController {
     }
 
     @GetMapping(value = "/read/{id}")
-    public ResponseEntity<UserLogin> read(@PathVariable Long id) {
-        return new ResponseEntity<UserLogin>(userLoginService.read(id), HttpStatus.OK);
+    public ResponseEntity<UserLogin> read(@PathVariable String emailId) {
+        return new ResponseEntity<UserLogin>(userLoginService.read(emailId), HttpStatus.OK);
     }
 
     @GetMapping(value = "/readAll")
@@ -29,28 +30,19 @@ public class UserLoginController {
     }
 
     @PutMapping(value = "/update/{id}")
-    public ResponseEntity<UserLogin> update(@PathVariable Long id, @RequestBody UserLogin userLogin) {
-        return new ResponseEntity<>(userLoginService.update(id, userLogin), HttpStatus.OK);
+    public ResponseEntity<UserLogin> update(@PathVariable String emailId, @RequestBody UserLogin userLogin) {
+        return new ResponseEntity<>(userLoginService.update(emailId, userLogin), HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/delete/{id}")
-    public ResponseEntity<UserLogin> delete(@PathVariable Long id) {
-        return new ResponseEntity<>(userLoginService.delete(id), HttpStatus.NO_CONTENT);
-    }
 
     @DeleteMapping(value = "/delete")
     public ResponseEntity<UserLogin> delete(@RequestBody UserLogin userLogin) {
         return new ResponseEntity<>(userLoginService.delete(userLogin), HttpStatus.NO_CONTENT);
     }
 
-    @PostMapping(value = "/createMember")
-    public ResponseEntity<UserLogin> create(@RequestBody UserLogin userLogin) {
-        return new ResponseEntity<UserLogin>(userLoginService.create(userLogin), HttpStatus.CREATED);
-    }
-
     @PostMapping
-    public ResponseEntity<RegistrationResult> registerUserAccount(@RequestBody UserLogin userLogin) {
-        return new ResponseEntity<>(userLoginService.register(userLogin), HttpStatus.OK);
+    public ResponseEntity<RegistrationResult> registerUserAccount(@RequestBody RegistrationDto registrationDto) {
+        return new ResponseEntity<>(userLoginService.register(registrationDto), HttpStatus.OK);
     }
 
 }
