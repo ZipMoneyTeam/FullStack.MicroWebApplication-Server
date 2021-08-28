@@ -4,6 +4,7 @@ import mainApp.dto.RegistrationDto;
 import mainApp.entities.AppUser;
 import mainApp.entities.RegistrationResult;
 import mainApp.entities.UserLogin;
+import mainApp.entities.UserLoginResult;
 import mainApp.repositories.AppUserRepository;
 import mainApp.repositories.UserLoginRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,11 @@ public class UserLoginService {
     public UserLogin create(RegistrationDto registration) {
         UserLogin userLogin = new UserLogin(registration.getEmailId(), registration.getPassword());
         return userLoginRepository.save(userLogin);
+    }
+
+    public UserLoginResult login(UserLogin userLogin) {
+        UserLogin result = userLoginRepository.findByEmailIdAndPassword(userLogin.getEmailId(), userLogin.getPassword());
+        return result != null ? UserLoginResult.SUCCESS : UserLoginResult.BAD_CREDENTIALS;
     }
 
     public UserLogin read(String emailId){

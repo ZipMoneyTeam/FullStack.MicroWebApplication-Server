@@ -3,13 +3,17 @@ package mainApp.controllers;
 import mainApp.dto.RegistrationDto;
 import mainApp.entities.RegistrationResult;
 import mainApp.entities.UserLogin;
+import mainApp.entities.UserLoginResult;
 import mainApp.services.UserLoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
+@CrossOrigin
 @RequestMapping(value = "/member-controller")
 public class UserLoginController {
     @Autowired
@@ -18,6 +22,8 @@ public class UserLoginController {
     public UserLoginController(UserLoginService userLoginService) {
         this.userLoginService = userLoginService;
     }
+
+
 
     @GetMapping(value = "/read/{id}")
     public ResponseEntity<UserLogin> read(@PathVariable String emailId) {
@@ -40,7 +46,14 @@ public class UserLoginController {
         return new ResponseEntity<>(userLoginService.delete(userLogin), HttpStatus.NO_CONTENT);
     }
 
-    @PostMapping
+    @PostMapping(value = "/login")
+    public ResponseEntity<UserLoginResult> login(@RequestBody UserLogin userLogin) {
+        UserLoginResult result = this.userLoginService.login(userLogin);
+        HttpStatus status = result.equals(UserLoginResult.SUCCESS) ? HttpStatus.OK : HttpStatus.UNAUTHORIZED;
+        return new ResponseEntity<>(result, status);
+    }
+
+    @PostMapping(path = "/register")
     public ResponseEntity<RegistrationResult> registerUserAccount(@RequestBody RegistrationDto registrationDto) {
         return new ResponseEntity<>(userLoginService.register(registrationDto), HttpStatus.OK);
     }

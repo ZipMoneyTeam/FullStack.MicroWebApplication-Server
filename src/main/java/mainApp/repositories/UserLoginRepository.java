@@ -14,4 +14,9 @@ public interface UserLoginRepository extends CrudRepository<UserLogin, Long> {
            value = "SELECT * FROM USER_LOGIN WHERE email_id = :emailId" )
     UserLogin findByEmailId(@Param("emailId") String emailId);
 
+    @Query(nativeQuery = true,
+            value = "SELECT * FROM USER_LOGIN " +
+                    "WHERE email_id = :emailId " +
+                    "AND password = :password" )
+    UserLogin findByEmailIdAndPassword(@Param("emailId") String emailId, @Param("password") String password);
 }

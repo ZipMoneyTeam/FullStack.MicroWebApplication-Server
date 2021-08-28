@@ -9,14 +9,19 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.header.Header;
+import org.springframework.security.web.session.SessionManagementFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.servlet.function.ServerRequest;
 
 import javax.swing.text.html.Option;
 import java.util.Arrays;
@@ -24,6 +29,7 @@ import java.util.Optional;
 
 
 @Configuration
+@EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -32,25 +38,24 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-            .authorizeRequests()
-            .antMatchers(
-                "/registration**",
-                "/js/**",
-                "/css/**",
-                "/img/**",
-                "/webjars/**").permitAll()
-            .anyRequest().authenticated()
-            .and()
-            .formLogin()
-            .loginPage("/login")
-            .permitAll()
-            .and()
-            .logout()
-            .invalidateHttpSession(true)
-            .clearAuthentication(true)
-            .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-            .logoutSuccessUrl("/login?logout")
-            .permitAll();
+                .csrf().disable()
+                .authenticationProvider(authenticationProvider())
+                .addFilter(corsFilter())
+                .authorizeRequests()
+                .antMatchers("/**").permitAll()
+                .anyRequest().authenticated()
+                .and()
+//                .formLogin()
+//            .loginPage("/login")
+//            .permitAll()
+//            .and()
+//            .logout()
+//            .invalidateHttpSession(true)
+//            .clearAuthentication(true)
+//            .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+//            .logoutSuccessUrl("/login?logout")
+//            .permitAll()
+        ;
     }
 
     @Bean
@@ -70,14 +75,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return auth;
     }
 
-    @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.setAllowCredentials(true);
         corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
-        corsConfiguration.setAllowedHeaders(Arrays.asList("Origin", "Access-Control-Allow-Origin", "Content-Type",
-                "Accept", "Authorization", "Origin, Accept", "X-Requested-With",
-                "Access-Control-Request-Method", "Access-Control-Request-Headers"));
+        corsConfiguration.setAllowedHeaders(Arrays.asList("Origin",
+                "Access-Control-Allow-Origin",
+                "Content-Type",
+                "Accept",
+                "Authorization",
+                "Origin, Accept",
+                "X-Requested-With",
+                "Access-Control-Request-Method",
+                "Access-Control-Request-Headers"));
         corsConfiguration.setExposedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "Authorization",
                 "Access-Control-Allow-Origin", "Access-Control-Allow-Origin", "Access-Control-Allow-Credentials"));
         corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
