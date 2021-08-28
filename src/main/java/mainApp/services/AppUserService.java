@@ -23,7 +23,7 @@ public class AppUserService {
     }
 
     public AppUser read(Long id){
-        return appUserRepository.findOne(id);
+        return appUserRepository.findById(id).get();
     }
 
     public List<AppUser> readAll() {
@@ -34,7 +34,7 @@ public class AppUserService {
     }
 
     public AppUser update(Long id, AppUser newUserData){
-        AppUser originalUser = appUserRepository.findOne(id);
+        AppUser originalUser = appUserRepository.findById(id).get();
         originalUser.setFirstName(newUserData.getFirstName());
         originalUser.setLastName(newUserData.getLastName());
         originalUser.setBirthDate(newUserData.getBirthDate());

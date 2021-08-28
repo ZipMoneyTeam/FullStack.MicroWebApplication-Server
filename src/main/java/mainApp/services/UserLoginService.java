@@ -22,7 +22,7 @@ public class UserLoginService {
     }
 
     public UserLogin read(Long id){
-        return userLoginRepository.findOne(id);
+        return userLoginRepository.findById(id).get();
     }
 
     public List<UserLogin> readAll() {
@@ -33,7 +33,7 @@ public class UserLoginService {
     }
 
     public UserLogin update(Long id, UserLogin newLoginData){
-        UserLogin originalUserLogin = userLoginRepository.findOne(id);
+        UserLogin originalUserLogin = userLoginRepository.findById(id).get();
         originalUserLogin.setEmailId(newLoginData.getEmailId());
         originalUserLogin.setPassword(newLoginData.getPassword());
         originalUserLogin = userLoginRepository.save(originalUserLogin);

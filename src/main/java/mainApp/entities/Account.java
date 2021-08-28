@@ -1,8 +1,7 @@
 package mainApp.entities;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
+
 
 @Entity
 public class Account {

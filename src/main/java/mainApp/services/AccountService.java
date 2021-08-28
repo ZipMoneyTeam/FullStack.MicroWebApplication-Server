@@ -28,7 +28,7 @@ public class AccountService {
     }
 
     public Account read(Long id){
-        return accountRepository.findOne(id);
+        return accountRepository.findById(id).get();
     }
 
     public List<Account> readAll() {
@@ -39,7 +39,7 @@ public class AccountService {
     }
 
     public Account update(Long id,Account newAccountData){
-        Account originalAccount = accountRepository.findOne(id);
+        Account originalAccount = accountRepository.findById(id).get();
         originalAccount.setAccountName(newAccountData.getAccountName());
         originalAccount.setAccountNumber(newAccountData.getAccountNumber());
         originalAccount.setAccountType(newAccountData.getAccountType());
@@ -70,13 +70,11 @@ public class AccountService {
         Account result = withdraw(idFrom, amountToTransfer);
         deposit(idTo, amountToTransfer);
 
-
-
         return result; // returns account we withdraw from
     }
 
     public Account deposit(Long id, Double amountToDeposit) { // using id to reference the specific account
-        Account originalAccount = accountRepository.findOne(id);
+        Account originalAccount = accountRepository.findById(id).get();
         Double amount = originalAccount.getAmount() + amountToDeposit;
         originalAccount.setAmount(amount);
 
@@ -88,13 +86,15 @@ public class AccountService {
     }
 
     public Account withdraw(Long id, Double amountToWithdraw) throws Exception { // using id to reference the specific account
-        Account originalAccount = accountRepository.findOne(id);
+        Account originalAccount = accountRepository.findById(id).get();
         Double amount = originalAccount.getAmount() - amountToWithdraw;
         if (amount < 0) {
             throw new Exception("Insufficient funds my boy");
         }
         originalAccount.setAmount(amount);
 
+        generateAndSaveTransaction(originalAccount.getAppUser(),"WITHDRAW", true,
+                String.format("Withdrew %s from account with id %s", amountToWithdraw, originalAccount.getId()));
 
 
         return originalAccount;

@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AccountRepository extends CrudRepository<Account,Long> {
-    //Account withdraw(Long id, Double amountToWithdraw);
+    Account withdraw(Long id, Double amountToWithdraw);
 }
