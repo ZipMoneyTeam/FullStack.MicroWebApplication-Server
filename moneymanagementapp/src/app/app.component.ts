@@ -10,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent {
   title = 'Gringotts Wizarding Bank';
+  
   constructor() { }
 
   ngOnInit(): void {
