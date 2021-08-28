@@ -4,7 +4,6 @@ import mainApp.entities.Account;
 import mainApp.entities.AppUser;
 import mainApp.entities.Transaction;
 import mainApp.repositories.AccountRepository;
-import mainApp.repositories.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

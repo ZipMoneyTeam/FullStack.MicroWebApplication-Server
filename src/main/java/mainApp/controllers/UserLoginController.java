@@ -1,16 +1,11 @@
 package mainApp.controllers;
 
-import com.sun.org.apache.regexp.internal.RE;
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
-import mainApp.entities.AppUser;
 import mainApp.entities.RegistrationResult;
 import mainApp.entities.UserLogin;
 import mainApp.services.UserLoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

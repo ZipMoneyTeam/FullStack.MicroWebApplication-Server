@@ -1,12 +1,13 @@
 package mainApp.services;
 
-import java.util.*;
-
+import mainApp.entities.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import mainApp.entities.User;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 public class MyUserPrincipal implements UserDetails {
 	
