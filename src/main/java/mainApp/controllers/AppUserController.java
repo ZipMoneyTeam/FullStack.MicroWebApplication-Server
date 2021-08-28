@@ -23,9 +23,9 @@ public class AppUserController {
         return new ResponseEntity<AppUser>(appUserService.create(appUser), HttpStatus.CREATED);
     }
 
-    @GetMapping(value = "/read/{id}")
-    public ResponseEntity<AppUser> read(@PathVariable Long id) {
-        return new ResponseEntity<AppUser>(appUserService.read(id), HttpStatus.OK);
+    @GetMapping(value = "/read/{emailId}")
+    public ResponseEntity<AppUser> read(@PathVariable String emailId) {
+        return new ResponseEntity<AppUser>(appUserService.read(emailId), HttpStatus.OK);
     }
 
     @GetMapping(value = "/readAll")
@@ -33,14 +33,14 @@ public class AppUserController {
         return new ResponseEntity<>(appUserService.readAll(), HttpStatus.OK);
     }
 
-    @PutMapping(value = "/update/{id}")
-    public ResponseEntity<AppUser> update(@PathVariable Long id, @RequestBody AppUser appUser) {
-        return new ResponseEntity<>(appUserService.update(id, appUser), HttpStatus.OK);
+    @PutMapping(value = "/update/{emailId}")
+    public ResponseEntity<AppUser> update(@PathVariable String emailId, @RequestBody AppUser appUser) {
+        return new ResponseEntity<>(appUserService.update(emailId, appUser), HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/delete/{id}")
-    public ResponseEntity<AppUser> delete(@PathVariable Long id) {
-        return new ResponseEntity<>(appUserService.delete(id), HttpStatus.NO_CONTENT);
+    @DeleteMapping(value = "/delete/{emailId}")
+    public ResponseEntity<AppUser> delete(@PathVariable String emailId) {
+        return new ResponseEntity<>(appUserService.delete(emailId), HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping(value = "/delete")

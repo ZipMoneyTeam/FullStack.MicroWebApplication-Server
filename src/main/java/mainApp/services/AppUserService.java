@@ -1,6 +1,7 @@
 package mainApp.services;
 
 import mainApp.entities.AppUser;
+import mainApp.entities.UserLogin;
 import mainApp.repositories.AppUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,9 +24,10 @@ public class AppUserService {
         return appUserRepository.save(appUser);
     }
 
-    public AppUser read(Long id){
-        return appUserRepository.findById(id).get();
-    }
+    public AppUser read(UserLogin userLogin) { return appUserRepository.findByEmailId(userLogin.getEmailId());}
+
+    public AppUser read(String emailId) { return appUserRepository.findByEmailId(emailId);}
+
 
     public List<AppUser> readAll() {
         Iterable<AppUser> userIterable = appUserRepository.findAll();
@@ -34,8 +36,8 @@ public class AppUserService {
         return result;
     }
 
-    public AppUser update(Long id, AppUser newUserData){
-        AppUser originalUser = appUserRepository.findById(id).get();
+    public AppUser update(String emailId, AppUser newUserData){
+        AppUser originalUser = read(emailId);
         originalUser.setFirstName(newUserData.getFirstName());
         originalUser.setLastName(newUserData.getLastName());
         originalUser.setBirthDate(newUserData.getBirthDate());
@@ -45,13 +47,13 @@ public class AppUserService {
         return originalUser;
     }
 
-    public AppUser delete(Long id){
-        AppUser appUserInDb = read(id);
+    public AppUser delete(String emailId){
+        AppUser appUserInDb = read(emailId);
         appUserRepository.delete(appUserInDb);
        return appUserInDb;
     }
 
     public AppUser delete(AppUser appUser){
-        return delete(appUser.getId());
+        return delete(appUser.getEmailId());
     }
 }

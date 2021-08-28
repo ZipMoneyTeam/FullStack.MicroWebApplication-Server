@@ -52,4 +52,5 @@ public class UserLoginController {
     public ResponseEntity<RegistrationResult> registerUserAccount(@RequestBody UserLogin userLogin) {
         return new ResponseEntity<>(userLoginService.register(userLogin), HttpStatus.OK);
     }
+
 }

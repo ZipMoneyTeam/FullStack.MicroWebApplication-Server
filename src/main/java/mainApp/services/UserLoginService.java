@@ -3,6 +3,7 @@ package mainApp.services;
 import mainApp.entities.AppUser;
 import mainApp.entities.RegistrationResult;
 import mainApp.entities.UserLogin;
+import mainApp.repositories.AppUserRepository;
 import mainApp.repositories.UserLoginRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,9 @@ public class UserLoginService {
 
     @Autowired
     UserLoginRepository userLoginRepository;
+
+    @Autowired
+    AppUserService appUserService;
 
     public UserLoginService(UserLoginRepository userLoginRepository) {
         this.userLoginRepository = userLoginRepository;
@@ -53,24 +57,36 @@ public class UserLoginService {
         return delete(userLogin.getId());
     }
 
-    public AppUser findByEmail(String email) {
-        return null;
-    }
 
-
-    public RegistrationResult register(UserLogin userLogin) {
+    public RegistrationResult register(UserLogin registrationDto) {
 
         RegistrationResult result;
 
-        AppUser existing = findByEmail(userLogin.getEmailId());
-        if (existing == null) {
-            create(userLogin);
+        UserLogin userLogin = userLoginRepository.findByEmailId(registrationDto.getEmailId());
+
+        if (userLogin == null) {
+            UserLogin newUserLogin = new UserLogin();
+            create(newUserLogin);
+
+            appUserService.create(null);
+
             result = RegistrationResult.SUCCESS;
+
         } else {
-            result = RegistrationResult.EMAIL_TAKEN;
+            AppUser existing = appUserService.read(userLogin);
+            if(existing == null) {
+
+                appUserService.create(null);
+
+                result = RegistrationResult.USER_CREATED;
+            }
+            else {
+                result = RegistrationResult.EMAIL_TAKEN;
+            }
         }
         return result;
     }
+
 
 //    @Override
 //    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
