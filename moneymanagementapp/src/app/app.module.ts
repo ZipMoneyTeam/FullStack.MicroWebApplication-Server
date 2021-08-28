@@ -10,14 +10,19 @@ import { CreateAccountComponent } from './create-account/create-account.componen
 import { DepositComponent } from './deposit/deposit.component';
 import { TransferAccountComponent } from './transfer-account/transfer-account.component';
 import { WithdrawComponent } from './withdraw/withdraw.component';
+import { HomepageComponent } from './homepage/homepage.component';
+import { FundsTransferComponent } from './funds-transfer/funds-transfer.component';
+import { LoginSaveComponent } from './login-save/login-save.component'
 
 const routes:Routes=[
-  // { path: '',component:AppComponent},
+  { path: 'homepage',component:HomepageComponent},
   {path:'userLogins',component:UserLoginsComponent},
   {path:'create-account',component:CreateAccountComponent},
+  {path:'funds-transfer',component:FundsTransferComponent},
   {path:'deposit',component:DepositComponent},
   {path:'withdraw',component:WithdrawComponent},
-  {path:'transfer-account',component:TransferAccountComponent}
+  {path:'transfer-account',component:TransferAccountComponent},
+  {path:'login-save',component:LoginSaveComponent}
   
 ]
 
@@ -29,7 +34,10 @@ const routes:Routes=[
     CreateAccountComponent,
     DepositComponent,
     TransferAccountComponent,
-    WithdrawComponent
+    WithdrawComponent,
+    HomepageComponent,
+    FundsTransferComponent,
+    LoginSaveComponent
   ],
   imports: [
     BrowserModule,

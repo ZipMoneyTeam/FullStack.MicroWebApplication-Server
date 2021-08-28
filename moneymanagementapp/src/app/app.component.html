@@ -1,11 +1,23 @@
-<h1>{{title}}</h1>
-<nav>
-    <a routerLink="/create-account"><button>Create Account</button></a>
-    <a routerLink="/userLogins"><button>Login</button></a>
-    <a routerLink="/deposit"><button>Deposit</button></a>
-    <a routerLink="/withdraw"><button>Withdraw</button></a>
-    <a routerLink="/transfer-account"><button>Transfer</button></a>
-  </nav>
 
-   <router-outlet></router-outlet>
+
+<body>
+    <h1>{{title}}</h1>
+    <p><strong>Diagon Alley, Charing Cross Road, London, England, Great Britain.</strong></p>
+    <!-- <img src="./assets/homepage.jpeg" alt="Gringotts Wizarding Bank"> -->
+    <nav>
+        <a routerLink="/create-account"><button>Create Account</button></a>
+         </nav>
+         <nav>
+             <p>Have an account already?<br>
+            <a routerLink="/userLogins"><button>Login</button></a></p>
+             </nav>
+         <router-outlet></router-outlet>
+    <p>
+        <strong>Positions:</strong>Head Goblin · Head Curse-Breaker · Curse-Breaker · Gringotts Guards · 
+Gringott's Dragon · Vaults Guardian
+    </p>     
+</body>
+
+
+   
   <!-- <app-messages></app-messages>  -->
