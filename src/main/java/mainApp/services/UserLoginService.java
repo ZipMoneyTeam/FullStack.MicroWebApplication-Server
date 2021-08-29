@@ -5,7 +5,6 @@ import mainApp.entities.AppUser;
 import mainApp.entities.RegistrationResult;
 import mainApp.entities.UserLogin;
 import mainApp.entities.UserLoginResult;
-import mainApp.repositories.AppUserRepository;
 import mainApp.repositories.UserLoginRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
