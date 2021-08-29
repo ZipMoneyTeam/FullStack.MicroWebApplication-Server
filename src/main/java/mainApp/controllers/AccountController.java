@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin
 @RequestMapping(value = "/account-controller")
 public class AccountController {
 
@@ -47,4 +48,24 @@ public class AccountController {
     public ResponseEntity<Account> delete(@RequestBody Account account) {
         return new ResponseEntity<>(accountService.delete(account), HttpStatus.NO_CONTENT);
     }
+
+    @PostMapping(value = "/transfer/{idFrom}/{idTo}")
+    public ResponseEntity<Account> transfer(@RequestBody Double amountToTransfer, @PathVariable Long idFrom, @PathVariable Long idTo) {
+        ResponseEntity<Account> result;
+        try {
+            result = new ResponseEntity<>(accountService.transfer(idFrom, idTo, amountToTransfer), HttpStatus.OK);
+        }
+        catch(Exception e){
+            result = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return result;
+    }
+
+    @PostMapping(value = "/deposit/{id}")
+    public ResponseEntity<Account> deposit(@PathVariable Long id, @RequestBody Double amountToDeposit) {
+        return new ResponseEntity<>(accountService.deposit(id, amountToDeposit), HttpStatus.OK);
+    }
+
+
+
 }

@@ -1,35 +1,25 @@
-package mainApp.entities;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+package mainApp.dto;
 
 
-@Entity
-public class AppUser {
 
-// AppUser does not need id number because we can simplify it and just use the unique emailid
-//    @GeneratedValue(strategy = GenerationType.AUTO)
-//    private Long id;
-
+public class RegistrationDto {
     String firstName;
     String lastName;
     String birthDate;
     String phoneNumber;
-    @Id String emailId;
+    String emailId;
+    String password;
 
-    // App user needs a user login somehow to connect them
-
-    public AppUser() {
+    public RegistrationDto() {
     }
 
-    public AppUser(String firstName, String lastName, String birthDate, String phoneNumber, String emailId) {
+    public RegistrationDto(String firstName, String lastName, String birthDate, String phoneNumber, String emailId, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
         this.phoneNumber = phoneNumber;
         this.emailId = emailId;
+        this.password = password;
     }
 
     public String getFirstName() {
@@ -70,5 +60,13 @@ public class AppUser {
 
     public void setEmailId(String emailId) {
         this.emailId = emailId;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

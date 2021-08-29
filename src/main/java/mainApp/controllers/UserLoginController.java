@@ -1,13 +1,18 @@
 package mainApp.controllers;
 
+import mainApp.dto.RegistrationDto;
+import mainApp.entities.RegistrationResult;
 import mainApp.entities.UserLogin;
+import mainApp.entities.UserLoginResult;
 import mainApp.services.UserLoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
+@CrossOrigin
 @RequestMapping(value = "/member-controller")
 public class UserLoginController {
     @Autowired
@@ -17,14 +22,11 @@ public class UserLoginController {
         this.userLoginService = userLoginService;
     }
 
-    @PostMapping(value = "/createMember")
-    public ResponseEntity<UserLogin> create(@RequestBody UserLogin userLogin) {
-        return new ResponseEntity<UserLogin>(userLoginService.create(userLogin), HttpStatus.CREATED);
-    }
+
 
     @GetMapping(value = "/read/{id}")
-    public ResponseEntity<UserLogin> read(@PathVariable Long id) {
-        return new ResponseEntity<UserLogin>(userLoginService.read(id), HttpStatus.OK);
+    public ResponseEntity<UserLogin> read(@PathVariable String emailId) {
+        return new ResponseEntity<UserLogin>(userLoginService.read(emailId), HttpStatus.OK);
     }
 
     @GetMapping(value = "/readAll")
@@ -33,17 +35,26 @@ public class UserLoginController {
     }
 
     @PutMapping(value = "/update/{id}")
-    public ResponseEntity<UserLogin> update(@PathVariable Long id, @RequestBody UserLogin userLogin) {
-        return new ResponseEntity<>(userLoginService.update(id, userLogin), HttpStatus.OK);
+    public ResponseEntity<UserLogin> update(@PathVariable String emailId, @RequestBody UserLogin userLogin) {
+        return new ResponseEntity<>(userLoginService.update(emailId, userLogin), HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/delete/{id}")
-    public ResponseEntity<UserLogin> delete(@PathVariable Long id) {
-        return new ResponseEntity<>(userLoginService.delete(id), HttpStatus.NO_CONTENT);
-    }
 
     @DeleteMapping(value = "/delete")
     public ResponseEntity<UserLogin> delete(@RequestBody UserLogin userLogin) {
         return new ResponseEntity<>(userLoginService.delete(userLogin), HttpStatus.NO_CONTENT);
     }
+
+    @PostMapping(value = "/login")
+    public ResponseEntity<UserLoginResult> login(@RequestBody UserLogin userLogin) {
+        UserLoginResult result = this.userLoginService.login(userLogin);
+        HttpStatus status = result.equals(UserLoginResult.SUCCESS) ? HttpStatus.OK : HttpStatus.UNAUTHORIZED;
+        return new ResponseEntity<>(result, status);
+    }
+
+    @PostMapping(path = "/register")
+    public ResponseEntity<RegistrationResult> registerUserAccount(@RequestBody RegistrationDto registrationDto) {
+        return new ResponseEntity<>(userLoginService.register(registrationDto), HttpStatus.OK);
+    }
+
 }

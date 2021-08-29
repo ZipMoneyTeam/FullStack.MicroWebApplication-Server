@@ -1,36 +1,38 @@
 package mainApp.entities;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
+
 
 @Entity
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
+    Long accountId;
     String accountName;
     Long accountNumber;  // how to increment auto generate
     String accountType;
     Double amount;
+    @ManyToOne(targetEntity=AppUser.class, fetch=FetchType.EAGER)
+    AppUser userId;
 
     public Account() {
     }
 
-    public Account(Long id, String accountName, Long accountNumber, String accountType, Double amount) {
-        this.id = id;
+    public Account(Long accountId, String accountName, Long accountNumber, String accountType, Double amount, AppUser appUser) {
+        this.accountId = accountId;
         this.accountName = accountName;
         this.accountNumber = accountNumber;
         this.accountType = accountType;
         this.amount = amount;
+        this.userId = appUser;
     }
 
-    public Long getId() {
-        return id;
+    public Long getAccountId() {
+        return accountId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
     }
 
     public String getAccountName() {
@@ -63,5 +65,13 @@ public class Account {
 
     public void setAmount(Double amount) {
         this.amount = amount;
+    }
+
+    public AppUser getAppUser() {
+        return userId;
+    }
+
+    public void setAppUser(AppUser appUser) {
+        this.userId = appUser;
     }
 }

@@ -1,9 +1,12 @@
 package mainApp.services;
 
+import mainApp.dto.RegistrationDto;
 import mainApp.entities.AppUser;
+import mainApp.entities.UserLogin;
 import mainApp.repositories.AppUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,13 +17,19 @@ public class AppUserService {
     @Autowired
     private AppUserRepository appUserRepository;
 
-    public AppUser create(AppUser appUser) {
+    public AppUserService(AppUserRepository appUserRepository) {
+        this.appUserRepository = appUserRepository;
+    }
+
+    public AppUser create(RegistrationDto registrationDto) {
+        AppUser appUser = new AppUser(registrationDto.getFirstName(), registrationDto.getLastName(), registrationDto.getBirthDate(), registrationDto.getPhoneNumber(), registrationDto.getEmailId());
         return appUserRepository.save(appUser);
     }
 
-    public AppUser read(Long id){
-        return appUserRepository.findOne(id);
-    }
+    public AppUser read(UserLogin userLogin) { return appUserRepository.findByEmailId(userLogin.getEmailId());}
+
+    public AppUser read(String emailId) { return appUserRepository.findByEmailId(emailId);}
+
 
     public List<AppUser> readAll() {
         Iterable<AppUser> userIterable = appUserRepository.findAll();
@@ -29,8 +38,8 @@ public class AppUserService {
         return result;
     }
 
-    public AppUser update(Long id, AppUser newUserData){
-        AppUser originalUser = appUserRepository.findOne(id);
+    public AppUser update(String emailId, AppUser newUserData){
+        AppUser originalUser = read(emailId);
         originalUser.setFirstName(newUserData.getFirstName());
         originalUser.setLastName(newUserData.getLastName());
         originalUser.setBirthDate(newUserData.getBirthDate());
@@ -40,13 +49,13 @@ public class AppUserService {
         return originalUser;
     }
 
-    public AppUser delete(Long id){
-        AppUser appUserInDb = read(id);
+    public AppUser delete(String emailId){
+        AppUser appUserInDb = read(emailId);
         appUserRepository.delete(appUserInDb);
        return appUserInDb;
     }
 
     public AppUser delete(AppUser appUser){
-        return delete(appUser.getId());
+        return delete(appUser.getEmailId());
     }
 }
