@@ -39,7 +39,7 @@ public class AccountService {
     public Account update(Long id,Account newAccountData){
         Account originalAccount = accountRepository.findById(id).get();
         originalAccount.setAccountName(newAccountData.getAccountName());
-        originalAccount.setAccountNumber(newAccountData.getAccountNumber());
+        //originalAccount.setAccountNumber(newAccountData.getAccountNumber());
         originalAccount.setAccountType(newAccountData.getAccountType());
         originalAccount.setAmount(newAccountData.getAmount());
         originalAccount = accountRepository.save(originalAccount);
@@ -76,8 +76,10 @@ public class AccountService {
         Double amount = originalAccount.getAmount() + amountToDeposit;
         originalAccount.setAmount(amount);
 
-        generateAndSaveTransaction(originalAccount,"DEPOSIT", true,
-                String.format("Deposited %s into account with id %s", amountToDeposit, originalAccount.getAccountId()));
+//        generateAndSaveTransaction(originalAccount,"DEPOSIT", true,
+//                String.format("Deposited %s into account with id %s", amountToDeposit, originalAccount.getAccountId()));
+//
+
 
         return originalAccount;
 
@@ -87,12 +89,12 @@ public class AccountService {
         Account originalAccount = accountRepository.findById(id).get();
         Double amount = originalAccount.getAmount() - amountToWithdraw;
         if (amount < 0) {
-            throw new Exception("Insufficient funds my boy");
+            throw new Exception("Insufficient funds");
         }
         originalAccount.setAmount(amount);
 
-        generateAndSaveTransaction(originalAccount,"WITHDRAW", true,
-                String.format("Withdrew %s from account with id %s", amountToWithdraw, originalAccount.getAccountId()));
+//        generateAndSaveTransaction(originalAccount,"WITHDRAW", true,
+//                String.format("Withdrew %s from account with id %s", amountToWithdraw, originalAccount.getAccountId()));
 
 
         return originalAccount;
@@ -104,4 +106,5 @@ public class AccountService {
 
     //After each function call transaction method
 
+    //
 }

@@ -61,11 +61,15 @@ public class AccountController {
         return result;
     }
 
-    @PostMapping(value = "/deposit/{id}")
+    @PostMapping(value = "/deposit/{id}/{amountToDeposit}")
     public ResponseEntity<Account> deposit(@PathVariable Long id, @RequestBody Double amountToDeposit) {
         return new ResponseEntity<>(accountService.deposit(id, amountToDeposit), HttpStatus.OK);
     }
 
+    @PostMapping(value = "/withdraw/{id}/{amountToWithdraw}")
+    public ResponseEntity<Account> withdraw(@PathVariable Long id, @RequestBody Double amountToWithdraw) throws Exception {
+        return new ResponseEntity<>(accountService.withdraw(id, amountToWithdraw), HttpStatus.OK);
+    }
 
 
 }
