@@ -1,28 +1,29 @@
 package mainApp.entities;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 
 @Entity
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long accountId;
-    String accountName;
-//    @GeneratedValue(strategy = GenerationType.AUTO)
-//    Long accountNumber;  // how to increment auto generate
-    String accountType;
-    Double amount;
+    private Long accountId;
+    private String accountName;
+    private UUID accountNumber;
+    private String accountType;
+    private Double amount;
     @ManyToOne(targetEntity=AppUser.class, fetch=FetchType.EAGER, cascade = CascadeType.MERGE)
-    AppUser emailId;
+    private AppUser emailId;
 
     public Account() {
+        this.accountNumber = UUID.randomUUID();
     }
 
     public Account(Long accountId, String accountName, String accountType, Double amount, AppUser appUser) {
         this.accountId = accountId;
         this.accountName = accountName;
-        //this.accountNumber = accountNumber;
+        this.accountNumber = UUID.randomUUID();
         this.accountType = accountType;
         this.amount = amount;
         this.emailId = appUser;
@@ -44,13 +45,13 @@ public class Account {
         this.accountName = accountName;
     }
 
-//    public Long getAccountNumber() {
-//        return accountNumber;
-//    }
-//
-//    public void setAccountNumber(Long accountNumber) {
-//        this.accountNumber = accountNumber;
-//    }
+    public UUID getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(UUID accountNumber) {
+        this.accountNumber = accountNumber;
+    }
 
     public String getAccountType() {
         return accountType;

@@ -7,6 +7,7 @@ import mainApp.entities.UserLogin;
 import mainApp.entities.UserLoginResult;
 import mainApp.repositories.UserLoginRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,13 +22,21 @@ public class UserLoginService {
     @Autowired
     AppUserService appUserService;
 
+    @Autowired
+    private BCryptPasswordEncoder passEncode;
+    //encode password
+
     public UserLoginService(UserLoginRepository userLoginRepository) {
         this.userLoginRepository = userLoginRepository;
     }
 
     public UserLogin create(RegistrationDto registration) {
-        UserLogin userLogin = new UserLogin(registration.getEmailId(), registration.getPassword());
+        UserLogin userLogin = new UserLogin();
+        userLogin.setEmailId(registration.getEmailId());
+        userLogin.setPassword(passEncode.encode(registration.getPassword()));
+        //password gotten and encoded
         return userLoginRepository.save(userLogin);
+
     }
 
     public UserLoginResult login(UserLogin userLogin) {

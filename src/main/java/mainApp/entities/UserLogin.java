@@ -11,11 +11,11 @@ import javax.persistence.Id;
 public class UserLogin {
 
 // UserLogin does not need id number because we can simplify it and just use the unique emailId
-//    @GeneratedValue(strategy = GenerationType.AUTO)
-//    Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
-    String emailId;
-    String password;
+    private Long id;
+    private String emailId;
+    private String password;
 
     public UserLogin() {
     }

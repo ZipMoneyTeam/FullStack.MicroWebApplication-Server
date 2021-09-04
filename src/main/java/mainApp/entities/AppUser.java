@@ -12,15 +12,16 @@ import javax.persistence.Id;
 public class AppUser {
 
 // AppUser does not need id number because we can simplify it and just use the unique emailid
-//    @GeneratedValue(strategy = GenerationType.AUTO)
-//    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    private Long id;
 
     @JsonProperty(required = false)
     String firstName;
     String lastName;
     String birthDate;
     String phoneNumber;
-    @Id String emailId;
+    String emailId;
 
     // App user needs a user login somehow to connect them
 
