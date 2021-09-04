@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin
+@CrossOrigin("*")
 @RequestMapping(value = "/transaction-controller")
 public class TransactionController {
 

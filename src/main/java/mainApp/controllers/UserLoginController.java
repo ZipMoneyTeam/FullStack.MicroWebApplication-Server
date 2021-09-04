@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@CrossOrigin
+@CrossOrigin("*")
 @RequestMapping(value = "/member-controller")
 public class UserLoginController {
     @Autowired
