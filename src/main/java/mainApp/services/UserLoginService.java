@@ -40,8 +40,13 @@ public class UserLoginService {
     }
 
     public UserLoginResult login(UserLogin userLogin) {
-        UserLogin result = userLoginRepository.findByEmailIdAndPassword(userLogin.getEmailId(), userLogin.getPassword());
-        return result != null ? UserLoginResult.SUCCESS : UserLoginResult.BAD_CREDENTIALS;
+        // Select * FROM user_login WHERE email_id = userLogin.getEmailId()
+        UserLogin result = userLoginRepository.findByEmailId(userLogin.getEmailId());
+        //Comparing original password to unencrypted password - userLogin.getPassword() = original/result is encrypted
+        Boolean pwMatchResult = passEncode.matches(userLogin.getPassword(),result.getPassword());
+        passEncode.matches(userLogin.getPassword(),result.getPassword());
+        return pwMatchResult ? UserLoginResult.SUCCESS : UserLoginResult.BAD_CREDENTIALS;
+        //
     }
 
     public UserLogin read(String emailId){
