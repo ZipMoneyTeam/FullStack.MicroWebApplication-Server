@@ -1,7 +1,9 @@
 package mainApp.services;
 
 import mainApp.entities.Account;
+import mainApp.entities.AppUser;
 import mainApp.entities.Transaction;
+import mainApp.entities.UserLogin;
 import mainApp.repositories.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ public class AccountService {
 
     @Autowired
     AccountRepository accountRepository;
+    @Autowired
     TransactionService transactionService;
 
     public AccountService(AccountRepository accountRepository) {
@@ -27,6 +30,10 @@ public class AccountService {
 
     public Account read(Long id){
         return accountRepository.findById(id).get();
+    }
+
+    public List<Account> readByEmailId(String emailId) {
+        return accountRepository.findByEmailId(emailId);
     }
 
     public List<Account> readAll() {
@@ -76,9 +83,9 @@ public class AccountService {
         Double amount = originalAccount.getAmount() + amountToDeposit;
         originalAccount.setAmount(amount);
 
-//        generateAndSaveTransaction(originalAccount,"DEPOSIT", true,
-//                String.format("Deposited %s into account with id %s", amountToDeposit, originalAccount.getAccountId()));
-//
+        generateAndSaveTransaction(originalAccount,"DEPOSIT", true,
+                String.format("Deposited %s into account with id %s", amountToDeposit, originalAccount.getAccountId()));
+
 
 
         return originalAccount;
@@ -93,8 +100,8 @@ public class AccountService {
         }
         originalAccount.setAmount(amount);
 
-//        generateAndSaveTransaction(originalAccount,"WITHDRAW", true,
-//                String.format("Withdrew %s from account with id %s", amountToWithdraw, originalAccount.getAccountId()));
+        generateAndSaveTransaction(originalAccount,"WITHDRAW", true,
+                String.format("Withdrew %s from account with id %s", amountToWithdraw, originalAccount.getAccountId()));
 
 
         return originalAccount;

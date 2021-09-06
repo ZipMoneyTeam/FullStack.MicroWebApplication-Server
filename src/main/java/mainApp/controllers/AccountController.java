@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin("*")
 @RequestMapping(value = "/account-controller")
@@ -27,6 +29,11 @@ public class AccountController {
     @GetMapping(value = "/read/{id}")
     public ResponseEntity<Account> read(@PathVariable Long id) {
         return new ResponseEntity<Account>(accountService.read(id), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/read/email/{emailId}")
+    public ResponseEntity<List<Account>> readByEmailId(@PathVariable String emailId) {
+        return new ResponseEntity<>(accountService.readByEmailId(emailId), HttpStatus.OK);
     }
 
     @GetMapping(value = "/readAll")
@@ -50,7 +57,7 @@ public class AccountController {
     }
 
     @PostMapping(value = "/transfer/{idFrom}/{idTo}")
-    public ResponseEntity<Account> transfer(@RequestBody Double amountToTransfer, @PathVariable Long idFrom, @PathVariable Long idTo) {
+    public ResponseEntity<Account> transfer(@PathVariable Long idFrom, @PathVariable Long idTo, @RequestBody Double amountToTransfer) {
         ResponseEntity<Account> result;
         try {
             result = new ResponseEntity<>(accountService.transfer(idFrom, idTo, amountToTransfer), HttpStatus.OK);
@@ -61,12 +68,12 @@ public class AccountController {
         return result;
     }
 
-    @PostMapping(value = "/deposit/{id}/{amountToDeposit}")
+    @PostMapping(value = "/deposit/{id}")
     public ResponseEntity<Account> deposit(@PathVariable Long id, @RequestBody Double amountToDeposit) {
         return new ResponseEntity<>(accountService.deposit(id, amountToDeposit), HttpStatus.OK);
     }
 
-    @PostMapping(value = "/withdraw/{id}/{amountToWithdraw}")
+    @PostMapping(value = "/withdraw/{id}")
     public ResponseEntity<Account> withdraw(@PathVariable Long id, @RequestBody Double amountToWithdraw) throws Exception {
         return new ResponseEntity<>(accountService.withdraw(id, amountToWithdraw), HttpStatus.OK);
     }
