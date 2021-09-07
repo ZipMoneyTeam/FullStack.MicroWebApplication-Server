@@ -1,5 +1,7 @@
 package mainApp.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +15,7 @@ public class AppUser {
 //    @GeneratedValue(strategy = GenerationType.AUTO)
 //    private Long id;
 
+    @JsonProperty(required = false)
     String firstName;
     String lastName;
     String birthDate;

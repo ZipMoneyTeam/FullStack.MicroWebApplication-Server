@@ -7,7 +7,7 @@ import java.time.Instant;
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
+    Long transactionId;
     String type;
     Boolean status;
     String info;
@@ -18,8 +18,8 @@ public class Transaction {
     public Transaction() {
     }
 
-    public Transaction(Long id, String type, Boolean status, String info, Instant date, Account accountId) {
-        this.id = id;
+    public Transaction(Long transactionId, String type, Boolean status, String info, Instant date, Account accountId) {
+        this.transactionId = transactionId;
         this.type = type;
         this.status = status;
         this.info = info;
@@ -27,12 +27,12 @@ public class Transaction {
         this.accountId = accountId;
     }
 
-    public Long getId() {
-        return id;
+    public Long getTransactionId() {
+        return transactionId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setTransactionId(Long transactionId) {
+        this.transactionId = transactionId;
     }
 
     public String getType() {

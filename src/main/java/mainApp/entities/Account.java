@@ -9,22 +9,23 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long accountId;
     String accountName;
-    Long accountNumber;  // how to increment auto generate
+//    @GeneratedValue(strategy = GenerationType.AUTO)
+//    Long accountNumber;  // how to increment auto generate
     String accountType;
     Double amount;
-    @ManyToOne(targetEntity=AppUser.class, fetch=FetchType.EAGER)
-    AppUser userId;
+    @ManyToOne(targetEntity=AppUser.class, fetch=FetchType.EAGER, cascade = CascadeType.MERGE)
+    AppUser emailId;
 
     public Account() {
     }
 
-    public Account(Long accountId, String accountName, Long accountNumber, String accountType, Double amount, AppUser appUser) {
+    public Account(Long accountId, String accountName, String accountType, Double amount, AppUser appUser) {
         this.accountId = accountId;
         this.accountName = accountName;
-        this.accountNumber = accountNumber;
+        //this.accountNumber = accountNumber;
         this.accountType = accountType;
         this.amount = amount;
-        this.userId = appUser;
+        this.emailId = appUser;
     }
 
     public Long getAccountId() {
@@ -43,13 +44,13 @@ public class Account {
         this.accountName = accountName;
     }
 
-    public Long getAccountNumber() {
-        return accountNumber;
-    }
-
-    public void setAccountNumber(Long accountNumber) {
-        this.accountNumber = accountNumber;
-    }
+//    public Long getAccountNumber() {
+//        return accountNumber;
+//    }
+//
+//    public void setAccountNumber(Long accountNumber) {
+//        this.accountNumber = accountNumber;
+//    }
 
     public String getAccountType() {
         return accountType;
@@ -68,10 +69,10 @@ public class Account {
     }
 
     public AppUser getAppUser() {
-        return userId;
+        return emailId;
     }
 
     public void setAppUser(AppUser appUser) {
-        this.userId = appUser;
+        this.emailId = appUser;
     }
 }
