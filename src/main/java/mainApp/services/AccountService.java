@@ -1,9 +1,6 @@
 package mainApp.services;
 
-import mainApp.entities.Account;
-import mainApp.entities.AppUser;
-import mainApp.entities.Transaction;
-import mainApp.entities.UserLogin;
+import mainApp.entities.*;
 import mainApp.repositories.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,8 +21,9 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    public Account create(Account account) {
-        return accountRepository.save(account);
+    public AccountCreationResult create(Account account) {
+        Account result = new Account(account.getAccountId(), account.getAccountName(), account.getAccountType(), account.getAmount(), account.getAppUser());
+        return result.getAmount() != null && result.getAccountName() != null && result.getAccountType() != null ? AccountCreationResult.SUCCESS : AccountCreationResult.BAD_CREDENTIALS;
     }
 
     public Account read(Long id){

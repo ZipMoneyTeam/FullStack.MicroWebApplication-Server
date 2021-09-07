@@ -1,6 +1,7 @@
 package mainApp.controllers;
 
 import mainApp.entities.Account;
+import mainApp.entities.AccountCreationResult;
 import mainApp.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,8 +23,10 @@ public class AccountController {
     }
 
     @PostMapping(value = "/createAccount")
-    public ResponseEntity<Account> create(@RequestBody Account account) {
-        return new ResponseEntity<Account>(accountService.create(account), HttpStatus.CREATED);
+    public ResponseEntity<AccountCreationResult> create(@RequestBody Account account) {
+        AccountCreationResult result = this.accountService.create(account);
+        HttpStatus status = result.equals(AccountCreationResult.SUCCESS) ? HttpStatus.CREATED : HttpStatus.UNAUTHORIZED;
+        return new ResponseEntity<>(result,status);
     }
 
     @GetMapping(value = "/read/{id}")
