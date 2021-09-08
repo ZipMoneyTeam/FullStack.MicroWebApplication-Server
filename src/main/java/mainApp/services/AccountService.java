@@ -5,6 +5,7 @@ import mainApp.repositories.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLOutput;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +40,7 @@ public class AccountService {
         Iterable<Account> accountIterable = accountRepository.findAll();
         List<Account> result = new ArrayList<>();
         accountIterable.forEach(result::add);
+        System.out.println("Getting data from DB: " + result);
         return result;
     }
 

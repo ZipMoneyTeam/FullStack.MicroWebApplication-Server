@@ -26,6 +26,11 @@ public class AppUserService {
         return appUserRepository.save(appUser);
     }
 
+    public AppUser create(AppUser appUser) {
+        AppUser appUser1 = new AppUser(appUser.getFirstName(), appUser.getLastName(), appUser.getBirthDate(), appUser.getPhoneNumber(), appUser.getEmailId());
+        return appUserRepository.save(appUser);
+    }
+
     public AppUser read(UserLogin userLogin) { return appUserRepository.findByEmailId(userLogin.getEmailId());}
 
     public AppUser read(String emailId) { return appUserRepository.findByEmailId(emailId);}
@@ -49,13 +54,13 @@ public class AppUserService {
         return originalUser;
     }
 
+    public AppUser delete(AppUser appUser){
+        return delete(appUser.getEmailId());
+    }
     public AppUser delete(String emailId){
         AppUser appUserInDb = read(emailId);
         appUserRepository.delete(appUserInDb);
        return appUserInDb;
     }
 
-    public AppUser delete(AppUser appUser){
-        return delete(appUser.getEmailId());
-    }
 }
