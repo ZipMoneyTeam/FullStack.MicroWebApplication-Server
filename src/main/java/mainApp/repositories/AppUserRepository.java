@@ -13,4 +13,5 @@ public interface AppUserRepository extends CrudRepository<AppUser, String> {
             value = "SELECT * FROM APP_USER WHERE email_id = :emailId" )
     AppUser findByEmailId(@Param("emailId") String emailId);
 
+    AppUser deleteByEmailId(String emailId);
 }
