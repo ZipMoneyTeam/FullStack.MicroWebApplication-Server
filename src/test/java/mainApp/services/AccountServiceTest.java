@@ -50,7 +50,7 @@ class AccountServiceTest {
 //                .of(    new AppUser("Manny", "Mbanefo","01-01-01", "1231231231", "manny@gmail.com" ))
 //                .collect(Collectors.toList()));
 //
-//        Assert.assertEquals(1, service.readByEmailId);
+//        Assert.assertEquals(1, service.readByEmailId());
     }
 
     @Test

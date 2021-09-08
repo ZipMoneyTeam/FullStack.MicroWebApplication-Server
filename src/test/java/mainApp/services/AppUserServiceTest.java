@@ -98,7 +98,7 @@ class AppUserServiceTest {
                         new AppUser("Sitara", "Kaleemullah","01-01-01", "1234567890", "sitara@gmail.com" ),
                         new AppUser("Rex", "Casio","01-01-01", "1112223333", "rex@gmail.com" ))
                 .collect(Collectors.toList()));
-        repository.deleteByEmailId("manny@gmail.com");
+        repository.deleteById("manny@gmail.com");
         int actual = appService.readAll().size();
         //Then
         //verify(repository, times(1)).delete("sitara@gmail.com");
@@ -124,9 +124,9 @@ class AppUserServiceTest {
         //Given
         AppUser user =  new AppUser("Sitara", "Kaleemullah","01-01-01", "1234567890", "sitara@gmail.com" );
         //When
-        when(repository.save(user)).thenReturn(user);
-        appService.delete("sitara@gmail.com");
-        //appService.delete(user);
+        doNothing().when(repository).deleteById(user.getEmailId());
+//        appService.delete("sitara@gmail.com");
+        appService.delete(user.getEmailId());
         //Then
         verify(repository, times(1)).delete(user);
         //verify(repository, times(1)).delete(user);

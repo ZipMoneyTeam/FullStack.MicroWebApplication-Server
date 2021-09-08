@@ -24,6 +24,7 @@ public class AccountService {
 
     public AccountCreationResult create(Account account) {
         Account result = new Account(account.getAccountId(), account.getAccountName(), account.getAccountType(), account.getAmount(), account.getAppUser());
+        accountRepository.save(account);
         return result.getAmount() != null && result.getAccountName() != null && result.getAccountType() != null ? AccountCreationResult.SUCCESS : AccountCreationResult.BAD_CREDENTIALS;
     }
 
