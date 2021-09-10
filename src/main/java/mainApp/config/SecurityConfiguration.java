@@ -58,7 +58,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public CorsFilter corsFilter() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.setAllowCredentials(true);
-        corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
+        //corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
+        corsConfiguration.setAllowedOrigins(Arrays.asList("https://gringottswizardingbank.herokuapp.com"));
         corsConfiguration.setAllowedHeaders(Arrays.asList("Origin",
                 "Access-Control-Allow-Origin",
                 "Content-Type",

@@ -7,12 +7,13 @@ import mainApp.entities.UserLoginResult;
 import mainApp.services.UserLoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@CrossOrigin
+@CrossOrigin("*")
 @RequestMapping(value = "/member-controller")
 public class UserLoginController {
     @Autowired
@@ -52,7 +53,7 @@ public class UserLoginController {
         return new ResponseEntity<>(result, status);
     }
 
-    @PostMapping(path = "/register")
+    @PostMapping(path = "/register",consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RegistrationResult> registerUserAccount(@RequestBody RegistrationDto registrationDto) {
         return new ResponseEntity<>(userLoginService.register(registrationDto), HttpStatus.OK);
     }

@@ -1,7 +1,6 @@
 package mainApp.services;
 
-import mainApp.entities.Account;
-import mainApp.entities.Transaction;
+import mainApp.entities.*;
 import mainApp.repositories.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,18 +14,25 @@ public class AccountService {
 
     @Autowired
     AccountRepository accountRepository;
+    @Autowired
     TransactionService transactionService;
 
     public AccountService(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
 
-    public Account create(Account account) {
-        return accountRepository.save(account);
+    public AccountCreationResult create(Account account) {
+        Account result = new Account(account.getAccountId(), account.getAccountName(), account.getAccountType(), account.getAmount(), account.getAppUser());
+        accountRepository.save(account);
+        return result.getAmount() != null && result.getAccountName() != null && result.getAccountType() != null ? AccountCreationResult.SUCCESS : AccountCreationResult.BAD_CREDENTIALS;
     }
 
     public Account read(Long id){
         return accountRepository.findById(id).get();
+    }
+
+    public List<Account> readByEmailId(String emailId) {
+        return accountRepository.findByEmailId(emailId);
     }
 
     public List<Account> readAll() {
@@ -39,7 +45,7 @@ public class AccountService {
     public Account update(Long id,Account newAccountData){
         Account originalAccount = accountRepository.findById(id).get();
         originalAccount.setAccountName(newAccountData.getAccountName());
-        originalAccount.setAccountNumber(newAccountData.getAccountNumber());
+        //originalAccount.setAccountNumber(newAccountData.getAccountNumber());
         originalAccount.setAccountType(newAccountData.getAccountType());
         originalAccount.setAmount(newAccountData.getAmount());
         originalAccount = accountRepository.save(originalAccount);
@@ -79,6 +85,8 @@ public class AccountService {
         generateAndSaveTransaction(originalAccount,"DEPOSIT", true,
                 String.format("Deposited %s into account with id %s", amountToDeposit, originalAccount.getAccountId()));
 
+
+
         return originalAccount;
 
     }
@@ -87,7 +95,7 @@ public class AccountService {
         Account originalAccount = accountRepository.findById(id).get();
         Double amount = originalAccount.getAmount() - amountToWithdraw;
         if (amount < 0) {
-            throw new Exception("Insufficient funds my boy");
+            throw new Exception("Insufficient funds");
         }
         originalAccount.setAmount(amount);
 
@@ -104,4 +112,5 @@ public class AccountService {
 
     //After each function call transaction method
 
+    //
 }
